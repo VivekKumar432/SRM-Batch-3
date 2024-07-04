@@ -1,1 +1,11 @@
 this is a temp file.
+
+
+git commands
+
+
+git add . (move  files into the staging area)
+git commit -m "your-message-here" (take the snapshot of the files in staging area)
+git branch -M main (change the branch)
+git remote add origin https://github.com/VivekKumar432/SRM-Batch-3.git (this is the link to the remote repo)
+git push (push the entire files from the staging area to the remote repo (GitHub))
