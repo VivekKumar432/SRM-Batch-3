@@ -1,25 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
 // dotenv.config();
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// MongoDB connection
-// mongoose.connect(process.env.MONGO_URI, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
 
-mongoose.connect("mongodb+srv://saloni:intern%40123@intern-1.kiydkti.mongodb.net/?retryWrites=true&w=majority&appName=Intern-1", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
+mongoose.connect()
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -36,7 +27,7 @@ app.post('/register', async (req, res) => {
     await user.save();
     res.status(201).send('User registered');
   } catch (error) {
-    res.status(400).send('Error registering user');
+    res.status(400).send('Error registering user:' + error);
   }
 });
 
