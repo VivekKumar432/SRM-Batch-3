@@ -21,6 +21,6 @@ function generateRefreshToken(user) {
 
 function verifyToken(token) {
     return jwt.verify(token, secretKey);
-}
+};
 
 module.exports = { generateToken, generateRefreshToken, verifyToken };
