@@ -289,10 +289,42 @@ const User = mongoose.model('User', userSchema);
 
 app.post('/register', async (req, res) => {
   // Registration logic
+  const { username, password, name, email, role } = req.body;
+  try {
+    const user = new User({ username, password, name, email, role });
+    await user.save();
+    res.status(201).send('User registered');
+  } catch (error) {
+    res.status(400).send('Error registering user: ' + error);
+  }
 });
 
 app.post('/login', async (req, res) => {
   // Login logic
+  const { username, password } = req.body;
+  try {
+    const user = await User.findOne({ username, password });
+    if (!user) {
+      return res.status(400).send('Invalid credentials');
+    }
+
+    let message;
+    switch (user.role) {
+      case 'admin':
+        message = `Welcome, admin ${user.name}!`;
+        break;
+      case 'user':
+        message = `Welcome, user ${user.name}!`;
+        break;
+      default:
+        message = `Login successful, ${user.name}!`;
+        break;
+    }
+
+    res.send(message);
+  } catch (error) {
+    res.status(500).send('Error logging in: ' + error);
+  }
 });
 
 app.listen(port, () => {
