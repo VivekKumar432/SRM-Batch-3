@@ -1,24 +1,27 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
+import UserHome from './components/UserHome';
+import AdminHome from './components/AdminHome';
 import './App.css';
 
 function App() {
+  const [userRole, setUserRole] = useState('');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login setUserRole={setUserRole} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/user-home" element={userRole === 'user' ? <UserHome /> : <Navigate to="/" />} />
+          <Route path="/admin-home" element={userRole === 'admin' ? <AdminHome /> : <Navigate to="/" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
