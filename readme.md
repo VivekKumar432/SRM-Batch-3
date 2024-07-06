@@ -350,10 +350,9 @@ What it does:
 
 ## Things to Improve
 
-1. Make passwords more secure by scrambling them before storing.
-2. Add more checks to make sure the information users enter is correct.
-3. Create a way for users to stay logged in even if they close the browser.
-4. Add more detailed error messages to help users understand what went wrong.
-5. As the project grows, organize the server code into separate files to make it easier to manage.
+1. Making passwords more secure by scrambling them before storing.
+2. Adding more checks to make sure the information users enter is correct.
+3. Creating a way for users to stay logged in even if they close the browser.
+4. Adding more detailed error messages to help users understand what went wrong.
 
-This project is a great start for learning how web applications work. As you learn more, you can add new features and make the application even better!
+
