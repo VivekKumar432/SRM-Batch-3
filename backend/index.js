@@ -10,20 +10,24 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 
 
-mongoose.connect()
+mongoose.connect("mongodb+srv://saloni:intern%40123@intern-1.kiydkti.mongodb.net/internship_project_1?retryWrites=true&w=majority&appName=Intern-1");
+
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  name: { type: String, required: true},
+  email: { type: String, required: true },
+  role: { type: String, required: true}
 });
 
 const User = mongoose.model('User', userSchema);
 
 // User registration
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, name, email, role } = req.body;
 
   try {
-    const user = new User({ username, password });
+    const user = new User({ username, password, name, email, role });
     await user.save();
     res.status(201).send('User registered');
   } catch (error) {
@@ -32,7 +36,7 @@ app.post('/register', async (req, res) => {
 });
 
 // User login
-app.post('/login', async (req, res) => {
+app.get('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -40,9 +44,23 @@ app.post('/login', async (req, res) => {
     if (!user) {
       return res.status(400).send('Invalid credentials');
     }
-    res.send('Login successful');
+
+    // Check the user's role and send different messages
+    let message;
+    switch (user.role) {
+      case 'admin':
+        message = 'Welcome, admin!';
+        break;
+      case 'user':
+        message = `Welcome, ${user.name}!`;
+        break;
+      default:
+        message = 'Login successful';
+        break;
+    }
+    res.send(message);
   } catch (error) {
-    res.status(500).send('Error logging in');
+    res.status(500).send('Error logging in: ' + error);
   }
 });
 
