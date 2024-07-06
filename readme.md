@@ -20,7 +20,7 @@ In our project, we're using these technologies to create a website where people 
 3. **React**: We use this to create the pages that users see in their web browsers.
 4. **Node.js**: This runs our server code and allows us to use JavaScript for both the front-end and back-end of our application.
 
-![Project Design](https://github.com/Saloni-singh22/SRM-Batch-3-Week-1/assets/115714175/629e01fc-99cb-4c21-9221-da457e41d142)
+![Project Design](https://github.com/Saloni-singh22/SRM-Batch-3-Week-1/assets/115714175/e2bf93af-a3a5-4b08-94d3-c28c7263a856)
 
 
 Now, let's break down each part of our project:
