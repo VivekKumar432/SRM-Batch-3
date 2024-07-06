@@ -1,6 +1,9 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 const port = 3000;
@@ -9,14 +12,18 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://saloni:intern%40123@intern-1.kiydkti.mongodb.net/internship_project_1?retryWrites=true&w=majority&appName=Intern-1");
+// Use the MONGODB_URI environment variable
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
   email: { type: String, required: true },
-  role: { type: String, required: true }
+  role: { type: String, required: true },
 });
 
 const User = mongoose.model('User', userSchema);
