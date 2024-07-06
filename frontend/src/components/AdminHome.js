@@ -1,8 +1,9 @@
 import React from 'react';
+import './AdminHome.css';
 
 function AdminHome() {
   return (
-    <div>
+    <div className="container">
       <h1>Welcome, Admin!</h1>
       <p>This is the admin home screen.</p>
     </div>

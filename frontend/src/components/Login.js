@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 function Login({ setUserRole }) {
   const [username, setUsername] = useState('');
@@ -25,7 +26,7 @@ function Login({ setUserRole }) {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './Register.css';
+import { useNavigate } from 'react-router-dom'; 
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -7,29 +9,33 @@ function Register() {
     password: '',
     name: '',
     email: '',
-    role: 'user', // default to 'user'
+    role: 'user', // default role
   });
 
+  const navigate = useNavigate(); 
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    const { name, value, type, checked } = e.target;
+    if (type === 'checkbox') {
+      setFormData((prev) => ({ ...prev, role: checked ? 'admin' : 'user' }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/register', formData);
-      alert(response.data);
+      await axios.post('http://localhost:3000/register', formData);
+      alert('User registered successfully');
+      navigate('/');  
     } catch (error) {
       alert('Error registering user: ' + error.response.data);
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -48,30 +54,27 @@ function Register() {
           <label>Email:</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} />
         </div>
-        <div>
-          <label>Role:</label>
-          <div className="role-container">
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="admin"
-                checked={formData.role === 'admin'}
-                onChange={handleChange}
-              />
-              Admin
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="role"
-                value="user"
-                checked={formData.role === 'user'}
-                onChange={handleChange}
-              />
-              User
-            </label>
-          </div>
+        <div className="role-container">
+          <label>
+            <input
+              type="checkbox"
+              name="role"
+              value="admin"
+              checked={formData.role === 'admin'}
+              onChange={handleChange}
+            />
+            Admin
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              name="role"
+              value="user"
+              checked={formData.role === 'user'}
+              onChange={handleChange}
+            />
+            User
+          </label>
         </div>
         <button type="submit">Register</button>
       </form>
