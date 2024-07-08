@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "this is the backend for the SRM batch 3 ERP system.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VivekKumar432/SRM-Batch-3.git"
+  },
+  "author": "SRM Batch-3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VivekKumar432/SRM-Batch-3/issues"
+  },
+  "homepage": "https://github.com/VivekKumar432/SRM-Batch-3#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.5",
+    "nodemon": "^3.1.4"
+  }
+}
