@@ -1,0 +1,106 @@
+/* Admin.css */
+
+body {
+    background-color: #f0f0f0; /* Light gray background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #ffffff; /* White background for the container */
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333; /* Dark gray text color */
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: #555; /* Gray text color */
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-success {
+    background-color: #28a745; /* Green button background */
+    border-color: #28a745;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.rounded-7 {
+    border-radius: 0.5rem;
+}
+
+.bg-primary {
+    background-color: #007bff !important; /* Primary blue background */
+    border-color: #007bff !important;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.mb-3.btn-default {
+    display: block;
+    text-align: center;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa; /* Light gray background */
+    color: #212529;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.mb-3.btn-default:hover {
+    background-color: #e2e6ea; /* Lighter gray on hover */
+    border-color: #dae0e5;
+}
+
+  
