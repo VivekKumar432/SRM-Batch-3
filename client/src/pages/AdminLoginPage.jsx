@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './LAdmin.css'; // Import the CSS file
+import '../assets/CSS/adminLoginPage.css'; // Import the CSS file
 
-function LAdmin() {
+function AdminLoginPage() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
@@ -23,8 +23,7 @@ function LAdmin() {
     }
     
     return (
-        <div className="body">
-            <div className="container">
+        <div className="admin-login-container">
                 <h2>Admin Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -60,13 +59,12 @@ function LAdmin() {
                     </button>
                 </form>
                 <br />
-                <p>Don't have an Admin Account?</p>
-                <Link to="/admin" className="btn btn-default border w-100 bg-light rounded-7 text-decoration-none">
+                <p>Dont have an Admin Account?</p>
+                <Link to="/admin/signup" className="btn btn-default border w-100 bg-light rounded-7 text-decoration-none">
                    Sign Up as Admin
                 </Link>
             </div>
-        </div>
     )
 }
 
-export default LAdmin;
+export default AdminLoginPage;

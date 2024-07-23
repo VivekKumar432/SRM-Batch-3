@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './Login.css';
+import '../assets/CSS/loginPage.css';
 
-function Login() {
-    const [name, setName] = useState()
+function LoginPage() {
+    // const [name, setName] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     const navigate = useNavigate()
@@ -14,7 +14,7 @@ function Login() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/login', {email, password})
+        axios.post('http://localhost:5050/api/userlogin', {email, password})
         .then(result => {
             console.log(result);
             if(result.data === "Success") {
@@ -26,7 +26,7 @@ function Login() {
     
     return (
         <div className="login-container">
-            <div className="login-box">
+            <div className="login-box"> 
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -61,11 +61,11 @@ function Login() {
                         Login
                     </button>
                 </form>
-                <p>Don't have an account? <Link to="/register" className="login-link">Signup</Link></p>
+                <p>Dont have an account? <Link to="/register" className="login-link">Signup</Link></p>
                 
             </div>
         </div>
     )
 }
 
-export default Login;
+export default LoginPage;
