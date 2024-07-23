@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './Admin.css';
+import '../assets/CSS/adminSignupPage.css';
 
-function Admin() {
+function AdminSignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -21,8 +21,7 @@ function Admin() {
     };
 
     return (
-        <div className="body">
-            <div className="container">
+        <div className="admin-signup-container">
                 <h2>Admin Registration</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
@@ -79,8 +78,7 @@ function Admin() {
                     Employee registration
                 </Link>
             </div>
-        </div>
     );
 }
 
-export default Admin;
+export default AdminSignupPage;

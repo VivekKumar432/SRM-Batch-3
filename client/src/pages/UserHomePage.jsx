@@ -1,7 +1,6 @@
-import React from 'react';
-import './UserHome.css';
+import '../assets/CSS/userHomePage.css';
 
-function UserHome() {
+function UserHomePage() {
   return (
     <div className="container">
       <h1>Welcome, User!</h1>
@@ -10,4 +9,4 @@ function UserHome() {
   );
 }
 
-export default UserHome;
+export default UserHomePage;

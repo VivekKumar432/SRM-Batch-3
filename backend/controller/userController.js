@@ -26,7 +26,7 @@ async function login(req, res) {
 
 async function register(req, res) {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, userName, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       firstName,
@@ -36,14 +36,12 @@ async function register(req, res) {
       role: "customer",
     });
     const savedUser = await newUser.save();
-    res
-      .status(201)
-      .json({
-        message: "user created successfully, user:savedUser",
-        user: savedUser,
-      });
+    res.status(201).json({
+      message: "user created successfully, user:savedUser",
+      user: savedUser,
+    });
   } catch (error) {
-    res.status(400).json({ message: "message.error" });
+    res.status(400).json({ message: error.Error });
   }
 }
 
