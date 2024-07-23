@@ -1,7 +1,6 @@
-import React from 'react';
-import './AdminHome.css';
+import '../assets/CSS/AdminHomePage.css';
 
-function AdminHome() {
+function AdminHomePage() {
   return (
     <div className="container">
       <h1>Welcome, Admin!</h1>
@@ -10,4 +9,4 @@ function AdminHome() {
   );
 }
 
-export default AdminHome;
+export default AdminHomePage;

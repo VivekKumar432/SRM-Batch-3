@@ -8,16 +8,16 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors({ origin: true, credentials: true }));
 
 const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 
-app.use("/user", userRoutes);
-app.use("/admin", adminRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 // app.get("/admin", checkRole("admin"),(req,res )=>{
 //   res.status(200).send("Welcome Admin");

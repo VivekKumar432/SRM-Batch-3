@@ -1,11 +1,10 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import './Home.css';
+import '../assets/CSS/homePage.css';
 
-function Home() {
+function HomePage() {
   return (
     <div className="container">
-      <h1>Welcome to the Home Page</h1>
+      <h1>Welcome to my Application</h1>
       <div className="button-container">
         <Link to="/login">
           <button>Login</button>
@@ -18,4 +17,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
