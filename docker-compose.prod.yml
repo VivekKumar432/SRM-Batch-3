@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5050:5050"
+    environment:
+      - NODE_ENV=production
+    command: ["node", "index.js"]
+
+  frontend:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    command: ["npm", "run", "build"]
