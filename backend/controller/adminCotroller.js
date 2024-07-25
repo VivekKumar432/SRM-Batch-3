@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 async function createAdminAccount() {
   const { name, email, password } = req.body;
