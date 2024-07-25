@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
+const { v4: uuidv4 } = require("uuid");
 const { generateToken } = require("../utils/authUtils");
 const jwt = require("jsonwebtoken");
 
@@ -27,20 +28,27 @@ async function login(req, res) {
 async function register(req, res) {
   try {
     const { firstName, lastName, userName, email, password } = req.body;
+    console.log("====================================");
+    console.log(req.body);
+    console.log("====================================");
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
+    const newUser = await User.create({
+      id: uuidv4(),
       firstName,
       lastName,
+      userName,
       email,
       password: hashedPassword,
       role: "customer",
     });
-    const savedUser = await newUser.save();
     res.status(201).json({
-      message: "user created successfully, user:savedUser",
-      user: savedUser,
+      message: "user created successfully",
+      user: newUser,
     });
   } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
     res.status(400).json({ message: error.Error });
   }
 }
