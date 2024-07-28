@@ -9,19 +9,20 @@ async function login(req, res) {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error("Invalid password");
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const token = generateToken(user); // Generate JWT token
-    res.status(200).json({ user: user, token: token, role: user.role });
+    res.cookie('token', token, { httpOnly: true });
+    res.status(200).json("Success");
   } catch (error) {
     console.error("Login error:", error.message);
-    res.status(401).json({ message: "Invalid credentials" });
+    res.status(500).json({ message: "Server error" });
   }
 }
 

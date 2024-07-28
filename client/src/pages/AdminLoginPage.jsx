@@ -12,15 +12,17 @@ function AdminLoginPage() {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/admin/login', {email, password})
-        .then(result => {
-            console.log(result)
-            if(result.data === "Success") {
-                navigate('/home')
+        axios.post('http://localhost:5050/api/admin/login', {email, password})
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                navigate('/admin-home');
+            } else {
+                console.log('Login failed:', response.data.message);
             }
         })
-        .catch(err => console.log(err))
-    }
+        .catch(err => console.log(err));
+    };
     
     return (
         <div className="admin-login-container">

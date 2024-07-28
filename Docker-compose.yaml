@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5050:5050"
+    environment:
+      - NODE_ENV=development
+        DB='mongodb+srv://Gitika:gitika123@khushbu.c7nmogr.mongodb.net/?retryWrites=true&w=majority&appName=Khushbu'
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+
+  frontend:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./client:/usr/src/app/
+      - /usr/src/app/node_modules

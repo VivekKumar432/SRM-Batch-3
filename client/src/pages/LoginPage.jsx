@@ -14,15 +14,17 @@ function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5050/api/userlogin', {email, password})
-        .then(result => {
-            console.log(result);
-            if(result.data === "Success") {
-                navigate('/home')
-            }
-        })
-        .catch(err => console.log(err))
-    };
+       axios.post('http://localhost:5050/api/user/login', {email, password})
+       .then(response => {
+        console.log(response);
+        if (response.status === 200) {
+            navigate('/user-home');
+        } else {
+            console.log('Login failed:', response.data.message);
+        }
+    })
+    .catch(err => console.log(err));
+};
     
     return (
         <div className="login-container">
