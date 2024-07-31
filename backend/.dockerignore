@@ -1,8 +1,0 @@
-node_modules
-
-.env
-
-.git
-dist
-.aws
-.coverage
