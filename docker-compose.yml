@@ -11,10 +11,8 @@ services:
     ports:
       - "5050:5050"
     container_name: express-container
-    environment:
-      - PORT=5050
-      - JWT_SECRET=${JWT_SECRET}
-      - MONGODB_URL=${MONGODB_URL}
+    env_file:
+      - ./backend/.env
   
   frontend:
     build:
