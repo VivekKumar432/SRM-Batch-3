@@ -2,16 +2,15 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'  // ID of Docker Hub credentials stored in Jenkins
-        BACKEND_IMAGE_NAME = 'saloni1224/backend'  // Docker Hub repository name for backend
-        FRONTEND_IMAGE_NAME = 'saloni1224/frontend'  // Docker Hub repository name for frontend
-        DOCKER_TAG = "latest"  // Tag for the Docker images
+        DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
+        BACKEND_IMAGE_NAME = 'saloni1224/backend'
+        FRONTEND_IMAGE_NAME = 'saloni1224/frontend'
+        DOCKER_TAG = "latest"
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Clone the repository from GitHub
                 git branch: 'main', url: 'https://github.com/Saloni-singh22/SRM-Batch-3-Week-1.git'
             }
         }
@@ -66,8 +65,13 @@ pipeline {
             steps {
                 script {
                     // Clean up local Docker images to save space
-                    sh "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG}"
-                    sh "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG}"
+                    if (isUnix()) {
+                        sh "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG} || true"
+                        sh "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG} || true"
+                    } else {
+                        bat "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG} || ver > nul"
+                        bat "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG} || ver > nul"
+                    }
                 }
             }
         }
@@ -75,7 +79,7 @@ pipeline {
 
     post {
         always {
-            cleanWs() // Clean up the workspace after the build
+            cleanWs()
         }
         success {
             echo 'Docker images for both backend and frontend successfully built and pushed to Docker Hub!'
