@@ -3,8 +3,9 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'  // ID of Docker Hub credentials stored in Jenkins
-        DOCKER_IMAGE_NAME = 'saloni1224/login-page' // Docker Hub repository name
-        DOCKER_TAG = "latest"  // Tag for the Docker image
+        BACKEND_IMAGE_NAME = 'saloni1224/backend'  // Docker Hub repository name for backend
+        FRONTEND_IMAGE_NAME = 'saloni1224/frontend'  // Docker Hub repository name for frontend
+        DOCKER_TAG = "latest"  // Tag for the Docker images
     }
 
     stages {
@@ -15,10 +16,18 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Backend Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${env.DOCKER_IMAGE_NAME}:${env.DOCKER_TAG}")
+                    dockerImageBackend = docker.build("${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG}", "./backend")
+                }
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                script {
+                    dockerImageFrontend = docker.build("${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG}", "./client")
                 }
             }
         }
@@ -33,11 +42,21 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Backend Docker Image') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
-                        dockerImage.push()
+                        dockerImageBackend.push()
+                    }
+                }
+            }
+        }
+
+        stage('Push Frontend Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
+                        dockerImageFrontend.push()
                     }
                 }
             }
@@ -47,7 +66,8 @@ pipeline {
             steps {
                 script {
                     // Clean up local Docker images to save space
-                    sh "docker rmi ${env.DOCKER_IMAGE_NAME}:${env.DOCKER_TAG}"
+                    sh "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG}"
+                    sh "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG}"
                 }
             }
         }
@@ -58,7 +78,7 @@ pipeline {
             cleanWs() // Clean up the workspace after the build
         }
         success {
-            echo 'Docker image successfully built and pushed to Docker Hub!'
+            echo 'Docker images for both backend and frontend successfully built and pushed to Docker Hub!'
         }
         failure {
             echo 'Build failed. Please check the logs for more details.'
