@@ -15,6 +15,7 @@ async function createAdminAccount() {
           const token = jwt.sign({ email: savedAdmin.email }, JWT_SECRET, {
             expiresIn: "1d",
           });
+          
           res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
           res.json({ message: "Admin registered successfully", token });
         })
