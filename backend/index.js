@@ -19,6 +19,9 @@ const adminRoutes = require("./routes/adminRoutes");
 
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.get('/',(req,res) => {
+  res.send('hello,world!');
+});
 
 // app.get("/admin", checkRole("admin"),(req,res )=>{
 //   res.status(200).send("Welcome Admin");
