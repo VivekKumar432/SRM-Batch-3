@@ -34,7 +34,7 @@ function SignupPage() {
         { withCredentials: true, credentials: "include" }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         navigate("/login"); // Redirect to main page or dashboard
       } else {
         setError("Login failed. Please check your credentials and try again.");
@@ -51,7 +51,7 @@ function SignupPage() {
       } else {
         setError("An unexpected error occurred. Please try again.");
       }
-      console.log("Error during login", error);
+      console.log("Error during signup", error);
     }
   };
 
