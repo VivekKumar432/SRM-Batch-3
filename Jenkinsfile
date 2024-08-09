@@ -1,58 +1,47 @@
 pipeline {
     agent any
-
     stages {
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    backendImage = docker.build("srm-batch-3-backend", "-f backend/Dockerfile backend")
+                    bat 'docker build -t srm-batch-3-backend -f backend/Dockerfile backend'
                 }
             }
         }
-
         stage('Build Frontend Docker Image') {
             steps {
                 script {
-                    frontendImage = docker.build("srm-batch-3-backend", "-f client/Dockerfile backend")
+                    bat 'docker build -t srm-batch-3-frontend -f frontend/Dockerfile frontend'
                 }
             }
         }
-
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'DOCKERHUB-CREDENTIALS') {
-                        echo 'Logged in to Docker Hub'
-                    }
+                    bat 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
                 }
             }
         }
-
         stage('Push Backend Docker Image') {
             steps {
                 script {
-                    backendImage.push('latest')
+                    bat 'docker push srm-batch-3-backend'
                 }
             }
         }
-
         stage('Push Frontend Docker Image') {
             steps {
                 script {
-                    frontendImage.push('latest')
+                    bat 'docker push srm-batch-3-frontend'
                 }
             }
         }
-        stage('Debug Workspace') {
-            steps {
-                script {
-                    bat 'dir /s'
-                }
-            }
-        }
-
     }
-
     post {
         always {
             cleanWs()
