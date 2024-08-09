@@ -26,7 +26,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    def frontendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\frontend' // Adjusted the path for frontend
+                    def frontendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\client' // Adjusted the path for frontend
                     if (fileExists(frontendPath)) {
                         echo "Building frontend image"
                         bat "docker build -t ${frontendImage}:latest ${frontendPath}" // Build the frontend image
