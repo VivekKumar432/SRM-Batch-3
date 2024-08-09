@@ -4,19 +4,18 @@ pipeline {
     environment {
         dockerRegistry = 'https://index.docker.io/v1/'
         dockerCreds = credentials('docker_credentials')
-        backendImage = 'mern-backend'
-        frontendImage = 'mern-frontend'
+        backendImage = 'anujpal1213145178/mern-backend'  // Use full image name including Docker Hub username
+        frontendImage = 'anujpal1213145178/mern-frontend' // Use full image name including Docker Hub username
     }
 
     stages {
         stage('Build Backend') {
             steps {
                 script {
-                    def backendPath = './backend'
+                    def backendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\backend' // Adjusted the path for backend
                     if (fileExists(backendPath)) {
                         echo "Building backend image"
-                        bat "docker build -t ${backendImage}:latest ${backendPath}" // Build the image
-                        bat "docker tag ${backendImage}:latest anujpal1213145178/${backendImage}:latest" // Tag image
+                        bat "docker build -t ${backendImage}:latest ${backendPath}" // Build the backend image
                     } else {
                         error "Backend directory not found"
                     }
@@ -27,11 +26,10 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    def frontendPath = './client'
+                    def frontendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\client' // Adjusted the path for frontend
                     if (fileExists(frontendPath)) {
                         echo "Building frontend image"
-                        bat "docker build -t ${frontendImage}:latest ${frontendPath}" // Build the image
-                        bat "docker tag ${frontendImage}:latest anujpal1213145178/${frontendImage}:latest" // Tag image
+                        bat "docker build -t ${frontendImage}:latest ${frontendPath}" // Build the frontend image
                     } else {
                         error "Frontend directory not found"
                     }
@@ -39,11 +37,12 @@ pipeline {
             }
         }
 
-       stage('Push Backend Docker Image') {
+        stage('Push Backend Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${env.dockerCreds}") {
-                        dockerImageBackend.push()
+                    echo "Pushing backend image to Docker Hub"
+                    docker.withRegistry("${dockerRegistry}", "${dockerCreds}") {
+                        bat "docker push ${backendImage}:latest" // Push the backend image
                     }
                 }
             }
@@ -52,8 +51,9 @@ pipeline {
         stage('Push Frontend Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${env.dockerCreds}") {
-                        dockerImageFrontend.push()
+                    echo "Pushing frontend image to Docker Hub"
+                    docker.withRegistry("${dockerRegistry}", "${dockerCreds}") {
+                        bat "docker push ${frontendImage}:latest" // Push the frontend image
                     }
                 }
             }
