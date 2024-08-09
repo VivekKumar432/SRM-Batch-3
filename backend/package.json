@@ -4,11 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "echo 'No build step required for backend' && exit 0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  
   "author": "",
   "license": "ISC",
   "description": "",
@@ -22,14 +19,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.5",
     "react": "^18.3.1",
-
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-
     "react-dom": "^18.3.1",
-    "uid": "^10.0.0"
-
+    "uuid": "^10.0.0"
   }
 }
