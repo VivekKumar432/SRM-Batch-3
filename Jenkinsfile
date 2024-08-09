@@ -4,8 +4,8 @@ pipeline {
     environment {
         dockerRegistry = 'https://index.docker.io/v1/'
         dockerCreds = credentials('docker_credentials')
-        backendImage = 'anujpal1213145178/mern-backend'  // Use full image name including Docker Hub username
-        frontendImage = 'anujpal1213145178/mern-frontend' // Use full image name including Docker Hub username
+        backendImage = 'anujpal1213145178/mern-backend'  // Full image name with Docker Hub username
+        frontendImage = 'anujpal1213145178/mern-frontend' // Full image name with Docker Hub username
     }
 
     stages {
@@ -26,7 +26,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    def frontendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\client' // Adjusted the path for frontend
+                    def frontendPath = 'C:\\Anuj\\Anuj-SRM-Batch-3\\frontend' // Adjusted the path for frontend
                     if (fileExists(frontendPath)) {
                         echo "Building frontend image"
                         bat "docker build -t ${frontendImage}:latest ${frontendPath}" // Build the frontend image
@@ -40,10 +40,14 @@ pipeline {
         stage('Push Backend Docker Image') {
             steps {
                 script {
+                    echo "Logging into Docker Hub"
+                    bat "docker login -u ${env.dockerCreds_USR} -p ${env.dockerCreds_PSW} ${dockerRegistry}"
+                    
                     echo "Pushing backend image to Docker Hub"
-                    docker.withRegistry("${dockerRegistry}", "${dockerCreds}") {
-                        bat "docker push ${backendImage}:latest" // Push the backend image
-                    }
+                    bat "docker push ${backendImage}:latest" // Push the backend image
+                    
+                    echo "Logging out of Docker Hub"
+                    bat "docker logout"
                 }
             }
         }
@@ -51,10 +55,14 @@ pipeline {
         stage('Push Frontend Docker Image') {
             steps {
                 script {
+                    echo "Logging into Docker Hub"
+                    bat "docker login -u ${env.dockerCreds_USR} -p ${env.dockerCreds_PSW} ${dockerRegistry}"
+                    
                     echo "Pushing frontend image to Docker Hub"
-                    docker.withRegistry("${dockerRegistry}", "${dockerCreds}") {
-                        bat "docker push ${frontendImage}:latest" // Push the frontend image
-                    }
+                    bat "docker push ${frontendImage}:latest" // Push the frontend image
+                    
+                    echo "Logging out of Docker Hub"
+                    bat "docker logout"
                 }
             }
         }
