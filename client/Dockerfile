@@ -1,5 +1,5 @@
 # Use an official Node runtime as a parent image
-FROM node:16
+FROM node:latest
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 5173
 
 # Command to start the Vite development server
 CMD ["npm", "run", "dev"]

@@ -1,20 +1,20 @@
 # Use a Node.js image
-FROM node:16
+FROM node:latest
 
 # Set the working directory
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
-COPY backend/package*.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of your application code
-COPY backend ./
+COPY . .
 
-# Copy the .env file
-COPY backend/.env .env
+# # Copy the .env file
+# COPY backend/.env .env
 
 # Expose the port your app will run on
 EXPOSE 5050
