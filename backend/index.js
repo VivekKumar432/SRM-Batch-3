@@ -19,6 +19,9 @@ const adminRoutes = require("./routes/adminRoutes");
 
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.get('/',(req,res) => {
+  res.send('hello,world!');
+});
 
 // app.get("/admin", checkRole("admin"),(req,res )=>{
 //   res.status(200).send("Welcome Admin");
@@ -30,14 +33,3 @@ app.use("/api/admin", adminRoutes);
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on ${process.env.PORT}`);
 });
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log("Connected to MongoDB");
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running on ${process.env.PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB", error);
-  });
