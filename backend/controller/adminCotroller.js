@@ -3,7 +3,7 @@ const Admin = require("../models/adminModel");
 const { v4: uuidv4 } = require("uuid");
 const { generateToken } = require("../utils/authUtils");
 const jwt = require("jsonwebtoken");
-
+//new
 async function adminLogin(req, res) {
   try {
     const { email, password } = req.body;
