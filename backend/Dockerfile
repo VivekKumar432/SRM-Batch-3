@@ -1,16 +1,23 @@
-# backend/Dockerfile
+# Use a Node.js image
 FROM node:16
 
+# Set the working directory
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY backend/package*.json ./
+
+# Install dependencies
 RUN npm install
 
-COPY . .
+# Copy the rest of your application code
+COPY backend ./
 
 # Copy the .env file
-COPY .env .env
+COPY backend/.env .env
 
+# Expose the port your app will run on
 EXPOSE 5050
 
-CMD ["node", "index.js"]
+# Command to run the app
+CMD ["npm", "start"]
