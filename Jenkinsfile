@@ -42,10 +42,8 @@ pipeline {
         stage('Push Backend') {
             steps {
                 script {
-                    echo "Preparing to push backend image"
-                    docker.withRegistry(dockerRegistry, dockerCreds) {
-                        bat "docker push anujpal1213145178/${backendImage}:latest"
-                    }
+                    echo "Pushing backend image to Docker Hub"
+                    bat "docker push anujpal1213145178/${backendImage}:latest" // Push the backend image
                 }
             }
         }
@@ -53,10 +51,8 @@ pipeline {
         stage('Push Frontend') {
             steps {
                 script {
-                    echo "Preparing to push frontend image"
-                    docker.withRegistry(dockerRegistry, dockerCreds) {
-                        bat "docker push anujpal1213145178/${frontendImage}:latest"
-                    }
+                    echo "Pushing frontend image to Docker Hub"
+                    bat "docker push anujpal1213145178/${frontendImage}:latest" // Push the frontend image
                 }
             }
         }
