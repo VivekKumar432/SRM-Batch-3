@@ -43,6 +43,14 @@ pipeline {
                 }
             }
         }
+        stage('Debug Workspace') {
+            steps {
+                script {
+                    bat 'dir /s'
+                }
+            }
+        }
+
     }
 
     post {
