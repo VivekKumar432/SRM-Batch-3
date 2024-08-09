@@ -29,7 +29,7 @@ app.get('/',(req,res) => {
 // app.get("/customer", checkRole("customer"),(req,res )=>{
 //   res.status(200).send("Welcome User");
 // })
-
+//new
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on ${process.env.PORT}`);
 });
