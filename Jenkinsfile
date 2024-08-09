@@ -5,7 +5,7 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    backendImage = docker.build("srm-batch-3-backend", "backend/Dockerfile")
+                    backendImage = docker.build("srm-batch-3-backend", "-f backend/Dockerfile backend")
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Build Frontend Docker Image') {
             steps {
                 script {
-                    frontendImage = docker.build("srm-batch-3-frontend", "client/Dockerfile")
+                    frontendImage = docker.build("srm-batch-3-backend", "-f client/Dockerfile backend")
                 }
             }
         }
