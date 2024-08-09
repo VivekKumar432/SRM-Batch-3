@@ -3,10 +3,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 const mongodb = require('./configuration/dbConfig');
-const adminRouter = require("./routes/adminRoutes");
+
 const bodyParser = require("body-parser");
 // const checkRole = require("./middleware/userRole");
-
+//express
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
