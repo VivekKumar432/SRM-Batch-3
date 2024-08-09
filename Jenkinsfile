@@ -5,7 +5,7 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    def backendImage = docker.build("srm-batch-3-backend", "backend/Dockerfile")
+                    backendImage = docker.build("srm-batch-3-backend", "backend/Dockerfile")
                 }
             }
         }
@@ -13,7 +13,7 @@ pipeline {
         stage('Build Frontend Docker Image') {
             steps {
                 script {
-                    def frontendImage = docker.build("srm-batch-3-frontend", "client/Dockerfile")
+                    frontendImage = docker.build("srm-batch-3-frontend", "client/Dockerfile")
                 }
             }
         }
@@ -31,7 +31,6 @@ pipeline {
         stage('Push Backend Docker Image') {
             steps {
                 script {
-                    def backendImage = docker.image('backend-image-name')
                     backendImage.push('latest')
                 }
             }
@@ -40,7 +39,6 @@ pipeline {
         stage('Push Frontend Docker Image') {
             steps {
                 script {
-                    def frontendImage = docker.image('frontend-image-name')
                     frontendImage.push('latest')
                 }
             }
