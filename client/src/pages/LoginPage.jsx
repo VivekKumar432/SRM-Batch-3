@@ -13,18 +13,23 @@ function LoginPage() {
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (e) => {
-        e.preventDefault()
-       axios.post('http://localhost:5050/api/user/login', {email, password})
-       .then(response => {
-        console.log(response);
-        if (response.status === 200) {
-            navigate('/user-home');
-        } else {
-            console.log('Login failed:', response.data.message);
-        }
-    })
-    .catch(err => console.log(err));
-};
+        e.preventDefault();
+
+        axios.post('http://localhost:5050/api/user/login', { email, password })
+            .then(response => {
+                console.log(response);
+                if (response.status === 200 && response.data === "Success") {
+                    navigate('/user-home'); // Navigate to the user home page on success
+                } else {
+                    console.log('Login failed:', response.data.message);
+                    alert('Login failed: ' + response.data.message); // Show an alert with the error message
+                }
+            })
+            .catch(err => {
+                console.error('Error during login:', err.response?.data?.message || err.message);
+                alert('Login failed: ' + (err.response?.data?.message || 'An error occurred'));
+            });
+    };
     
     return (
         <div className="login-container">
