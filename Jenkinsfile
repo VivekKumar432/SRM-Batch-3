@@ -39,20 +39,22 @@ pipeline {
             }
         }
 
-        stage('Push Backend') {
+       stage('Push Backend Docker Image') {
             steps {
                 script {
-                    echo "Pushing backend image to Docker Hub"
-                    bat "docker push anujpal1213145178/${backendImage}:latest" // Push the backend image
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.dockerCreds}") {
+                        dockerImageBackend.push()
+                    }
                 }
             }
         }
 
-        stage('Push Frontend') {
+        stage('Push Frontend Docker Image') {
             steps {
                 script {
-                    echo "Pushing frontend image to Docker Hub"
-                    bat "docker push anujpal1213145178/${frontendImage}:latest" // Push the frontend image
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.dockerCreds}") {
+                        dockerImageFrontend.push()
+                    }
                 }
             }
         }
