@@ -6,12 +6,30 @@ pipeline {
         BACKEND_IMAGE_NAME = 'nimisham2305/backend'
         FRONTEND_IMAGE_NAME = 'nimisham2305/frontend'
         DOCKER_TAG = "latest"
+        
+        // Reference the stored credentials
+        JWT_SECRET = credentials('JWT_Secret')      // Replace 'jwt-secret' with the ID you used
+        MONGODB_URL = credentials('mongodb_url')    // Replace 'mongodb-url' with the ID you used
+        PORT = credentials('PORT')                  // Replace 'port' with the ID you used
     }
 
     stages {
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/NIMISHAM2305/SRM-Batch-3.git'
+            }
+        }
+
+        stage('Create .env File') {
+            steps {
+                script {
+                    // Create the .env file using the credentials from Jenkins
+                    sh '''
+                    echo "PORT=${PORT}" > backend/.env
+                    echo "JWT_SECRET=${JWT_SECRET}" >> backend/.env
+                    echo "MONGODB_URL=${MONGODB_URL}" >> backend/.env
+                    '''
+                }
             }
         }
 
