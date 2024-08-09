@@ -10,15 +10,45 @@ function AdminSignupPage() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:3001/admin', { name, email, password })
-            .then(result => {
-                console.log(result);
-                navigate('/admin/login');
-            })
-            .catch(err => console.log(err));
-    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        if (!name || !email || !password) {
+          setError("Fields cannot be empty");
+          return;
+        }
+    
+        try {
+          const response = await axios.post(
+            "http://localhost:5050/api/user/admin/login",
+            {
+              name,
+              email,
+              password,
+            },
+            { withCredentials: true, credentials: "include" }
+          );
+    
+          if (response.status === 201) {
+            navigate("admin//login"); // Redirect to main page or dashboard
+          } else {
+            setError("Login failed. Please check your credentials and try again.");
+          }
+        } catch (error) {
+          if (error.response) {
+            setError(
+              error.response.data.message || "Login failed. Please try again."
+            );
+          } else if (error.request) {
+            setError(
+              "No response from server. Please check your network connection."
+            );
+          } else {
+            setError("An unexpected error occurred. Please try again.");
+          }
+          console.log("Error during signup", error);
+        }
+      };
 
     return (
         <div className="admin-signup-container">
