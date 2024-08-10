@@ -8,17 +8,48 @@ function AdminSignupPage() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:3001/admin', { name, email, password })
-            .then(result => {
-                console.log(result);
-                navigate('/admin/login');
-            })
-            .catch(err => console.log(err));
-    };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+    
+        if (!name || !email || !password) {
+          setError("Fields cannot be empty");
+          return;
+        }
+    
+        try {
+            const response = await axios.post(
+                "http://localhost:5050/api/admin/signup",
+                { name, email, password },
+                { withCredentials: true, credentials: "include" }
+            );
+        
+            if (response.status === 201) {
+                navigate("/admin/login");
+            } else {
+                setError("Signup failed. Please check your details and try again.");
+            }
+        } catch (error) {
+            console.error("Error during signup:", error);
+        
+            if (error.response) {
+                if (error.response.status === 400) {
+                    setError("Invalid input. Please correct your details and try again.");
+                } else if (error.response.status === 500) {
+                    setError("Server error. Please try again later.");
+                } else {
+                    setError(error.response.data.message || "Signup failed. Please try again.");
+                }
+            } else if (error.request) {
+                setError("No response from server. Please check your network connection.");
+            } else {
+                setError("An unexpected error occurred. Please try again.");
+            }
+        }
+        
+      };
 
     return (
         <div className="admin-signup-container">
@@ -66,6 +97,7 @@ function AdminSignupPage() {
                             required
                         />
                     </div>
+                    {error && <div className="error_msg">{error}</div>}
                     <button type="submit" className="btn btn-success w-100 rounded-7 bg-primary">
                         Register
                     </button>

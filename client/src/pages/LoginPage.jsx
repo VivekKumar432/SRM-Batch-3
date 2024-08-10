@@ -12,18 +12,38 @@ function LoginPage() {
 
     axios.defaults.withCredentials = true;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        axios.post('http://localhost:5050/api/userlogin', {email, password})
-        .then(result => {
-            console.log(result);
-            if(result.data === "Success") {
-                navigate('/home')
+        try {
+            const response = await axios.post(
+              "http://localhost:5050/api/user/login",
+              {
+                email,
+                password,
+              },
+              { withCredentials: true, credentials: "include" }
+            );
+      
+            if (response.status === 200) {
+              navigate("/user-home"); // Redirect to main page or dashboard
+            } else {
+              setError("Login failed. Please check your credentials and try again.");
             }
-        })
-        .catch(err => console.log(err))
-    };
-    
+          } catch (error) {
+            if (error.response) {
+              setError(
+                error.response.data.message || "Login failed. Please try again."
+              );
+            } else if (error.request) {
+              setError(
+                "No response from server. Please check your network connection."
+              );
+            } else {
+              setError("An unexpected error occurred. Please try again.");
+            }
+            console.log("Error during login", error);
+          }
+        };
     return (
         <div className="login-container">
             <div className="login-box"> 
