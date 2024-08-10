@@ -13,7 +13,7 @@ pipeline {
         stage('Build Backend') {
             steps {
                 script {
-                    def backendPath = "basic-erp/backend"
+                    def backendPath = "SRM-BATCH-3/backend"
                     if (fileExists(backendPath)) {
                         bat "docker build -t ${backendImage}:latest ${backendPath}"
                         bat "docker tag ${backendImage} thepurpleaxe/mern-backend:mern-backend"
@@ -29,7 +29,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    def frontendPath = "basic-erp/frontend"
+                    def frontendPath = "SRM-BATCH-3/frontend"
                     if (fileExists(frontendPath)) {
                         bat "docker build -t ${frontendImage}:latest ${frontendPath}"
                         bat "docker tag ${frontendImage} thepurpleaxe/mern-frontend:mern-frontend"
@@ -43,7 +43,7 @@ pipeline {
         stage('Push Backend') {
             steps {
                 script {
-                    docker.withRegistry("https://index.docker.io/v1/", 'dockerhub-credentials') {
+                    docker.withRegistry("https://index.docker.io/v1/", 'git_credentials') {
                         // bat 'docker login -u thepurpleaxe -p FalconHeavy@01'
                         // bat 'docker push json101/javapp'
                         echo "Pushing backend image to Docker Hub"
@@ -56,7 +56,7 @@ pipeline {
         stage('Push Frontend') {
             steps {
                 script {
-                    docker.withRegistry(dockerRegistry, 'dockerhub-credentials') {
+                    docker.withRegistry(dockerRegistry, 'git_credentials') {
                         echo "Pushing frontend image to Docker Hub"
                         bat "docker push thepurpleaxe/mern-frontend:${frontendImage}"
                         // bat "docker push ${frontendImage}:latest"
