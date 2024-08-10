@@ -29,7 +29,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 script {
-                    def frontendPath = "SRM-BATCH-3/frontend"
+                    def frontendPath = "SRM-BATCH-3/client"
                     if (fileExists(frontendPath)) {
                         bat "docker build -t ${frontendImage}:latest ${frontendPath}"
                         bat "docker tag ${frontendImage} thepurpleaxe/mern-frontend:mern-frontend"
