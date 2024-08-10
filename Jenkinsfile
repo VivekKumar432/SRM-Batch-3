@@ -1,65 +1,76 @@
-
 pipeline {
     agent any
 
     environment {
-        dockerRegistry = "https://index.docker.io/v1/"
-        dockerCreds = credentials('git_credentials')
-        backendImage = 'mern-backend'
-        frontendImage = 'mern-frontend'
+        DOCKER_CREDENTIALS_ID = 'git_credentials'
+        BACKEND_IMAGE_NAME = 'kartik2111/backend'
+        FRONTEND_IMAGE_NAME = 'kartik2111/frontend'
+        DOCKER_TAG = "latest"
     }
 
     stages {
-        stage('Build Backend') {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/kartikkushwaha21/SRM-Batch-3.git'
+            }
+        }
+
+        stage('Build Backend Docker Image') {
             steps {
                 script {
-                    def backendPath = "SRM-BATCH-3/backend"
-                    if (fileExists(backendPath)) {
-                        bat "docker build -t ${backendImage}:latest ${backendPath}"
-                        bat "docker tag ${backendImage} thepurpleaxe/mern-backend:mern-backend"
-                        // bat "docker tag ${backendImage} ${backendImage}:latest"
+                    dockerImageBackend = docker.build("${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG}", "./backend")
+                }
+            }
+        }
 
+        stage('Build Frontend Docker Image') {
+            steps {
+                script {
+                    dockerImageFrontend = docker.build("${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG}", "./client")
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
+                        echo "Logged in to Docker Hub"
+                    }
+                }
+            }
+        }
+
+        stage('Push Backend Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
+                        dockerImageBackend.push()
+                    }
+                }
+            }
+        }
+
+        stage('Push Frontend Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
+                        dockerImageFrontend.push()
+                    }
+                }
+            }
+        }
+
+        stage('Post-build Cleanup') {
+            steps {
+                script {
+                    // Clean up local Docker images to save space
+                    if (isUnix()) {
+                        sh "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG} || true"
+                        sh "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG} || true"
                     } else {
-                        error "Backend directory ${backendPath} not found"
-                    }
-                }
-            }
-        }
-
-        stage('Build Frontend') {
-            steps {
-                script {
-                    def frontendPath = "SRM-BATCH-3/client"
-                    if (fileExists(frontendPath)) {
-                        bat "docker build -t ${frontendImage}:latest ${frontendPath}"
-                        bat "docker tag ${frontendImage} thepurpleaxe/mern-frontend:mern-frontend"
-                    } else {
-                        error "Frontend directory ${frontendPath} not found"
-                    }
-                }
-            }
-        }
-
-        stage('Push Backend') {
-            steps {
-                script {
-                    docker.withRegistry("https://index.docker.io/v1/", 'git_credentials') {
-                        // bat 'docker login -u thepurpleaxe -p FalconHeavy@01'
-                        // bat 'docker push json101/javapp'
-                        echo "Pushing backend image to Docker Hub"
-                        bat "docker push thepurpleaxe/mern-backend:${backendImage}"
-                    }
-                }
-            }
-        }
-
-        stage('Push Frontend') {
-            steps {
-                script {
-                    docker.withRegistry(dockerRegistry, 'git_credentials') {
-                        echo "Pushing frontend image to Docker Hub"
-                        bat "docker push thepurpleaxe/mern-frontend:${frontendImage}"
-                        // bat "docker push ${frontendImage}:latest"
+                        bat "docker rmi ${env.BACKEND_IMAGE_NAME}:${env.DOCKER_TAG} || ver > nul"
+                        bat "docker rmi ${env.FRONTEND_IMAGE_NAME}:${env.DOCKER_TAG} || ver > nul"
                     }
                 }
             }
@@ -68,12 +79,13 @@ pipeline {
 
     post {
         always {
-            echo 'Pipeline completed'
+            cleanWs()
+        }
+        success {
+            echo 'Docker images for both backend and frontend successfully built and pushed to Docker Hub!'
         }
         failure {
-            echo 'Pipeline failed'
+            echo 'Build failed. Please check the logs for more details.'
         }
     }
 }
-
-
