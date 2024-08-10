@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         dockerRegistry = "https://index.docker.io/v1/"
-        dockerCreds = credentials('dockerhub-credentials')
+        dockerCreds = credentials('git_credentials')
         backendImage = 'mern-backend'
         frontendImage = 'mern-frontend'
     }
