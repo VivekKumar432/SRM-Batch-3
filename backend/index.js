@@ -22,6 +22,7 @@ app.use("/api/admin", adminRoutes);
 app.get('/',(req,res) => {
   res.send('hello,world!');
 });
+//new
 
 // app.get("/admin", checkRole("admin"),(req,res )=>{
 //   res.status(200).send("Welcome Admin");
