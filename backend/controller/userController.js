@@ -19,10 +19,11 @@ async function login(req, res) {
     }
 
     const token = generateToken(user); // Generate JWT token
-    res.status(200).json({ user: user, token: token, role: user.role });
+    console.log("login Succesful")
+    res.status(200).json({status:"Success", user: user, token: token, role: user.role });
   } catch (error) {
     console.error("Login error:", error.message);
-    res.status(401).json({ message: "Invalid credentials" });
+    res.status(401).json({status:"Failure", message: "Invalid credentials" });
   }
 }
 
@@ -40,7 +41,7 @@ async function register(req, res) {
       userName,
       email,
       password: hashedPassword,
-      role: "customer",
+      role: "user",
     });
     res.status(201).json({
       message: "user created successfully",

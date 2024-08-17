@@ -44,7 +44,7 @@ const adminLogin = (req, res) => {
               expiresIn: "1d",
             });
             res.cookie("token", token, { httpOnly: true, sameSite: "strict" });
-            res.json("Success");
+            res.status(200).json({status:"Success", user: user, token: token, role: user.role });
           } else {
             res.json("The password is incorrect");
           }

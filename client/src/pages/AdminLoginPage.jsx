@@ -12,11 +12,11 @@ function AdminLoginPage() {
     axios.defaults.withCredentials = true;
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/admin/login', {email, password})
+        axios.post('http://localhost:5050/api/admin/login', {email, password})
         .then(result => {
             console.log(result)
-            if(result.data === "Success") {
-                navigate('/home')
+            if(result.data.status === "Success") {
+                navigate('/admin-home')
             }
         })
         .catch(err => console.log(err))
