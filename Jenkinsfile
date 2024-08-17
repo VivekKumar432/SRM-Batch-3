@@ -6,7 +6,7 @@ pipeline {
         BACKEND_IMAGE_NAME = 'nimisham2305/backend'
         FRONTEND_IMAGE_NAME = 'nimisham2305/frontend'
         DOCKER_TAG = "latest"
-        
+
         // Credentials stored in Jenkins for secure use
         JWT_SECRET = credentials('JWT_Secret')      // ID for JWT secret
         MONGODB_URL = credentials('mongodb_url')    // ID for MongoDB URL
