@@ -38,7 +38,8 @@ The integration of these technologies in the MERN stack facilitates the developm
    Test API endpoints using Postman.  
    Validate frontend functionality across browsers.  
    Prepare project documentation and a concise project report.
-
+    hello everyone
+    
 Now lets review each part of the project,
 
 ## FRONTEND  
