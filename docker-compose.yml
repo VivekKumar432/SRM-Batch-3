@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5050:5050"
+    environment:
+      - PORT=5050
+      - JWT_SECRET=G@2#4fa5!E%P0KqwJH7^&8lbRvZu1DxsY9eTI+c3VN6o-@mLrBjW
+      - MONGODB_URL=mongodb+srv://piebytwo014:admin123@auth.xjgufjh.mongodb.net/?retryWrites=true&w=majority&appName=Auth
+
+
+  fontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5173:5173"
+

@@ -14,11 +14,12 @@ function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:5050/api/userlogin', {email, password})
+        axios.post('http://localhost:5050/api/user/login', {email, password})
         .then(result => {
             console.log(result);
-            if(result.data === "Success") {
-                navigate('/home')
+            if(result.data.status === "Success") {
+                console.log("logging into home page")
+                navigate('/user-home')
             }
         })
         .catch(err => console.log(err))

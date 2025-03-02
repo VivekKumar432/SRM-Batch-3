@@ -12,7 +12,7 @@ function AdminSignupPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/admin', { name, email, password })
+        axios.post('http://localhost:5050/api/admin/register', { name, email, password })
             .then(result => {
                 console.log(result);
                 navigate('/admin/login');

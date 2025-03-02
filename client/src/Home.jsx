@@ -4,7 +4,7 @@ import axios from 'axios';
 function Home() {
     axios.defaults.withCredentials = true;
     useEffect(() => {
-        axios.get('http://localhost:3001/home', {
+        axios.get('http://localhost:5050/home', {
             withCredentials: true // Include credentials (cookies) with the request
         })
         .then(result => {
