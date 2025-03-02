@@ -20,6 +20,7 @@ const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/user", userRoutes);
 app.use("/api/admin", adminRoutes);
 
+
 // app.get("/admin", checkRole("admin"),(req,res )=>{
 //   res.status(200).send("Welcome Admin");
 // })
@@ -29,4 +30,5 @@ app.use("/api/admin", adminRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on ${process.env.PORT}`);
+
 });
